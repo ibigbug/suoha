@@ -1,13 +1,16 @@
 var Card = require('../models/card'),
-    Game = require('../models/game').Game;
+    Game = require('../models/game').Game,
+    db = require('../config').db;
 
 exports.index = function (req, res) {
-  var game = new Game();
-  game.cards = generateCards();
-  game.start();
+  db.collection('games', function (err) {
+  });
+};
 
-  res.render('index.jade', {game: game}, function (err, html) {
-    res.send(html);
+exports.createGame = function (req, res) {
+  var game = new Game();
+  db.collection('games').save(game, function (err, game) {
+    res.send(game);
   });
 };
 

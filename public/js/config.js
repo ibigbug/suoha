@@ -22,3 +22,13 @@ require.config({
 
   }
 });
+
+require(['jquery', 'app'], function ($, game) {
+  $(function(){
+    var game_collection = new game.GameCollection(),
+        page_view = new game.PageView({
+          el: $('#main'),
+          game_collection: game_collection
+        });
+  });
+});

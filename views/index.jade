@@ -1,16 +1,8 @@
 extends layout
 
 block main
-  #host-position
-    #cards-remaining
-      .card Cards-remaining
+  .game-wating-list
+    p Loading...
 
-  #user-position
-    #user-1
-      #user-1-cards
-    #user-2
-      #user-2-cards
-
-block scripts
-  script.
-    require(['/static/js/game.js'], function (game) { game.start(); });
+  button.js-new-game
+    |New game
