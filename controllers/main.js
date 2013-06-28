@@ -1,18 +1,25 @@
-var card = require('../models/card');
+var Card = require('../models/card'),
+    Game = require('../models/game').Game;
 
 exports.index = function (req, res) {
-  res.render('index.jade', {cards_remaining: generateCards()}, function (err, html) {
+  var game = new Game();
+  game.cards = generateCards();
+  game.start();
+
+  res.render('index.jade', {game: game}, function (err, html) {
     res.send(html);
   });
 };
 
-function generateCards () {
+function generateCards (count /* how many set of cards*/) {
   var ret = [];
-  for (var type in card.TYPES) {
-    for (var point in card.POINTS) {
-      ret.push(new card.Card(type, point));
+  for (var type in Card.TYPES) {
+    for (var point in Card.POINTS) {
+      ret.push(new Card.Card(type, point));
     }
   }
+
+  for (var i = 0; i < count ; i++) ret.concat(ret);
 
   return ret;
 }
