@@ -1,8 +1,14 @@
 extends layout
 
 block main
-  div(data-game-waiting-count=0).game-waiting-list
-    p Loading...
+  .game-container
+    p Waiting game list
+    div(data-game-waiting-count=0).game-waiting-list
+      p Loading...
 
-  button.js-new-game
-    |New game
+    button.js-new-game New game
+
+  .user-container
+    p Online user
+    div(data-online-user-count=0).online-user-list
+      p Loading...
