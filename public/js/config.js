@@ -30,5 +30,6 @@ require(['jquery', 'app'], function ($, game) {
           el: $('#main'),
           game_collection: game_collection
         });
+    game_collection.fetch();
   });
 });

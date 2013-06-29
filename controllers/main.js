@@ -1,9 +1,20 @@
-var Card = require('../models/card'),
-    Game = require('../models/game').Game,
+var Game = require('../models/game').Game,
+    GAME_STATUS = require('../models/game').GAME_STATUS,
     db = require('../config').db;
 
+
+//Html render
+
 exports.index = function (req, res) {
-  db.collection('games', function (err) {
+  res.render('index.jade');
+};
+
+
+//API
+exports.waitingGame = function (req, res) {
+  var collection = db.collection('games');
+  collection.find({status: GAME_STATUS.WAITNG}).toArray(function (err, games) {
+    res.json(games);
   });
 };
 
@@ -14,15 +25,3 @@ exports.createGame = function (req, res) {
   });
 };
 
-function generateCards (count /* how many set of cards*/) {
-  var ret = [];
-  for (var type in Card.TYPES) {
-    for (var point in Card.POINTS) {
-      ret.push(new Card.Card(type, point));
-    }
-  }
-
-  for (var i = 0; i < count ; i++) ret.concat(ret);
-
-  return ret;
-}

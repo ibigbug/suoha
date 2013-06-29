@@ -9,7 +9,7 @@ define(['backbone', 'underscore', './templates', 'models/game-model'], function 
 
     createNewGame: function () {
       var game = new Game();
-      this.options.game_collection.add(game);
+      this.options.game_collection.create(game);
     }
   });
 
