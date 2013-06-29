@@ -5,8 +5,6 @@ define(['backbone', 'underscore', './templates', 'models/game-model'], function 
       'click .js-new-game': 'createNewGame'
     },
 
-
-
     createNewGame: function () {
       var game = new Game();
       this.options.game_collection.create(game);
