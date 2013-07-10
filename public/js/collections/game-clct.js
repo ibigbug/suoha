@@ -1,11 +1,11 @@
 define(['backbone', 'models/game-model'], function (Backbone, Game) {
-  var GameCollections =  Backbone.Collection.extend({
+  var GameCollection =  Backbone.Collection.extend({
 
     model: Game,
 
-    url: '/games',
+    url: '/games'
 
   });
 
-  return GameCollections;
+  return GameCollection;
 });

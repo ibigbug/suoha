@@ -31,5 +31,8 @@ require(['jquery', 'app'], function ($, game) {
           game_collection: game_collection
         });
     game_collection.fetch();
+
+    var user_collection = new game.UserCollection();
+    user_collection.fetch();
   });
 });
