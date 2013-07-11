@@ -16,6 +16,8 @@ app.use(express.bodyParser());
 app.use(express.cookieParser('some secret:)'));
 app.use('/static', express.static(__dirname + '/public'));
 
+app.use(express.logger());
+
 //routes
 route(app);
 
