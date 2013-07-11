@@ -1,7 +1,7 @@
 define(function(){
   var game_item_tpl = [
    '<li>',
-   '<a href="#game/<%= _id%>">',
+   '<a href="#/games/<%= _id%>">',
    '<%= _id%>',
    '</a>',
    '</li>'
@@ -9,7 +9,7 @@ define(function(){
 
   user_item_tpl = [
    '<li>',
-   '<a href="#user/<%= _id%>">',
+   '<a href="#/users/<%= _id%>">',
    '<%= name%>(<%= status%>)',
    '</a>',
    '</li>'
