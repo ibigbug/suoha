@@ -15,8 +15,8 @@ define(['backbone', './templates', 'models/game-model', 'models/user-model'], fu
     registUser: function(){
       var user = new User();
       user.set({ name: user.$el.find('input').val() });
-      console.log(user);
-      this.options.user_collection.create(user);
+      user.save();
+      this.options.user_collection.add(user);
     }
   });
 

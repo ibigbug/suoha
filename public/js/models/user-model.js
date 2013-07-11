@@ -6,6 +6,7 @@ define(['backbone', 'underscore', 'views/templates'], function (Backbone, _, tem
 
     el: $('.user-container'),
     tpl: _.template(templates.user_item_tpl),
+    url: '/users/',
 
     initialize: function(){
       this.$el = this.el;

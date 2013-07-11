@@ -4,6 +4,7 @@ var db =require('../config').db,
 
 exports.register = function(req, res){
   db.collection('users').save(new User(req.param('name')), function(err, user){
+    console.log(user);
     res.json(user);
   });
 };
