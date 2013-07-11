@@ -10,6 +10,7 @@ define(function(){
   user_item_tpl = [
    '<li>',
    '<a href="#<%= id%>">',
+<<<<<<< HEAD
    '<%= name%>(<%= status%>)',
    '</a>',
    '</li>'
@@ -18,5 +19,14 @@ define(function(){
   return {
     game_item_tpl: game_item_tpl,
     user_item_tpl: user_item_tpl
+=======
+   '<%= id%>',
+   '</a>',
+   '</li>'
+  ];
+
+  return {
+    game_item_tpl: game_item_tpl
+>>>>>>> develop
   };
 });
