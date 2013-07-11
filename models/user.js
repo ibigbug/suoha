@@ -1,14 +1,12 @@
-function User () {
-  this.name = uuid();
+function User(name){
+  this.id = null;
+  this.name = name;
+  this.status = USER_STATUS_TABLE.OFFLINE;
+}
+
+var USER_STATUS_TABLE = {
+  'OFFLINE': 0,
+  'ONLINE': 1
 }
 
 exports.User = User;
-
-
-function uuid () {
-  var uid = 0;
-
-  return function () {
-    return uid += 1;
-  };
-}
