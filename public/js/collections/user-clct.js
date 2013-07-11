@@ -3,7 +3,7 @@ define(['backbone', 'models/user-model'], function(Backbone, User){
 
     model: User,
 
-    url: '/users/'
+    url: '/users'
 
   });
 

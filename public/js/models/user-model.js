@@ -6,7 +6,7 @@ define(['backbone', 'underscore', 'views/templates'], function (Backbone, _, tem
 
     el: $('.user-container'),
     tpl: _.template(templates.user_item_tpl),
-    url: '/users/',
+    url: '/users',
 
     initialize: function(){
       this.$el = this.el;
@@ -17,9 +17,10 @@ define(['backbone', 'underscore', 'views/templates'], function (Backbone, _, tem
     },
 
     render: function(){
+
       var $el = this.$el.find('.online-user-list');
       var online_user_count = $el.data('online-user-count');
-      parseInt(online_user_count, 10) == 0 && $el.html('') && $el.removeAttr('data-online-user-count');
+      parseInt(online_user_count, 10) === 0 && $el.html('') && $el.removeAttr('data-online-user-count');
 
       $el.append(this.tpl(this.toJSON()));
       $el.data('online-user-count', online_user_count + 1);

@@ -9,3 +9,4 @@ var USER_STATUS_TABLE = {
 }
 
 exports.User = User;
+exports.USER_STATUS_TABLE = USER_STATUS_TABLE;
