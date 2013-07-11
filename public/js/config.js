@@ -24,7 +24,10 @@ require.config({
 });
 
 require(['jquery', 'app'], function ($, game) {
+
   $(function(){
+    // Start game
+
     var game_collection = new game.GameCollection(),
         page_view = new game.PageView({
           el: $('#main'),
@@ -32,7 +35,10 @@ require(['jquery', 'app'], function ($, game) {
         });
     game_collection.fetch();
 
+    //Fetch user
+    
     var user_collection = new game.UserCollection();
     user_collection.fetch();
+
   });
 });
