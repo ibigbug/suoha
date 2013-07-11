@@ -6,5 +6,5 @@ exports.route = function (app) {
   app.post('/games', controllers.main.createGame);
 
   app.get('/users', controllers.user.allUsers);
-  app.post('/users/reg/', controllers.user.register);
+  app.post('/users', controllers.user.register);
 };

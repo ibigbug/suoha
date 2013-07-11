@@ -3,13 +3,13 @@ var db =require('../config').db,
 
 
 exports.register = function(req, res){
-  db.collection('users').save(new User(), function(err, user){
+  db.collection('users').save(new User(req.param('name')), function(err, user){
     res.json(user);
   });
 };
 
 exports.allUsers = function(req, res){
-  db.collection('users').find({}).toArray(function(err, users){
+  db.collection('users').find().toArray(function(err, users){
     res.json(users);
   });
 };

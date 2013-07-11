@@ -1,5 +1,4 @@
 function User(name){
-  this.id = null;
   this.name = name;
   this.status = USER_STATUS_TABLE.OFFLINE;
 }

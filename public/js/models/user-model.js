@@ -1,6 +1,10 @@
 define(['backbone', 'underscore', 'views/templates'], function (Backbone, _, templates) {
   var User = Backbone.Model.extend({
-    el: $('.online-user-list'),
+    defaults: {
+      name: null
+    },
+
+    el: $('.user-container'),
     tpl: _.template(templates.user_item_tpl),
 
     initialize: function(){
@@ -12,7 +16,14 @@ define(['backbone', 'underscore', 'views/templates'], function (Backbone, _, tem
     },
 
     render: function(){
-      console.log(this.toJSON());
+      var $el = this.$el.find('.online-user-list');
+      var online_user_count = $el.data('online-user-count');
+      parseInt(online_user_count, 10) == 0 && $el.html('') && $el.removeAttr('data-online-user-count');
+
+      $el.append(this.tpl(this.toJSON()));
+      $el.data('online-user-count', online_user_count + 1);
     }
   });
+
+  return User;
 });
