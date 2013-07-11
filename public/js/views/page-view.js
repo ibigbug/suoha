@@ -1,5 +1,16 @@
 define(['backbone', 'jquery', '../settings', './templates', 'models/game-model', 'models/user-model'], function (Backbone, $, settings, Templates, Game, User) {
   var PageView = Backbone.View.extend({
+    initialize: function(){
+      window.NS = {};
+      var that = this;
+      $(window).on('beforeunload', function(e){
+        that.logoutUser();
+        var confirmationMsg = 'ttt';
+
+        (e || window.event).returnValue = confirmationMsg;
+        return confirmationMsg;
+      });
+    },
 
     events: {
       'click .js-new-game': 'createNewGame',
@@ -29,11 +40,20 @@ define(['backbone', 'jquery', '../settings', './templates', 'models/game-model',
         url: settings.login_url,
         dataType: 'json',
         type: 'POST',
-        data: {name: $('.login-username').val()},
+        data: {name: $('.login-username').val()}
       }).done(function(user){
+        NS.user = user;
         alert('Login Success');
       }).fail(function(resp){
         alert('Login Error');
+      });
+    },
+
+    logoutUser: function(){
+      $.ajax({
+        url: '/account/logout',
+        data: {id: NS.user._id},
+        type: 'POST'
       });
     }
   });
