@@ -7,4 +7,6 @@ exports.route = function (app) {
 
   app.get('/users', controllers.user.allUsers);
   app.post('/users', controllers.user.register);
+
+  app.post('/account/login', controllers.user.login);
 };
