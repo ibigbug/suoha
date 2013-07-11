@@ -8,8 +8,6 @@ var GAME_STATUS = {
 };
 
 function Game (count) {
- var now = Date.now();
-
  this.status = GAME_STATUS.WAITNG;
  this.users = [];
  this.cards = generateCards(count);
