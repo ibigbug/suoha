@@ -2,14 +2,6 @@ define(['backbone', 'jquery', '../settings', './templates', 'models/game-model',
   var PageView = Backbone.View.extend({
     initialize: function(){
       window.NS = {};
-      var that = this;
-      $(window).on('beforeunload', function(e){
-        that.logoutUser();
-        var confirmationMsg = 'ttt';
-
-        (e || window.event).returnValue = confirmationMsg;
-        return confirmationMsg;
-      });
     },
 
     events: {
@@ -36,6 +28,7 @@ define(['backbone', 'jquery', '../settings', './templates', 'models/game-model',
     },
 
     loginUser: function(){
+      var that = this;
       $.ajax({
         url: settings.login_url,
         dataType: 'json',
@@ -43,18 +36,23 @@ define(['backbone', 'jquery', '../settings', './templates', 'models/game-model',
         data: {name: $('.login-username').val()}
       }).done(function(user){
         NS.user = user;
+        that.startHeartBeat();
         alert('Login Success');
       }).fail(function(resp){
         alert('Login Error');
       });
     },
 
-    logoutUser: function(){
-      $.ajax({
-        url: '/account/logout',
-        data: {id: NS.user._id},
-        type: 'POST'
-      });
+    startHeartBeat: function(){
+      if (!NS.user) return;
+      if (NS.heartRate) return;
+      NS.heartRate = setInterval(function(){
+        $.ajax({
+          url: '/account/heartbeat',
+          data: {id: NS.user._id},
+          type: 'POST'
+        });
+      }, 100);
     }
   });
 

@@ -1,4 +1,5 @@
 var db =require('../config').db,
+    ObjectID = require('mongodb').ObjectID,
     User = require('../models/user').User,
     USER_STATUS_TABLE = require('../models/user').USER_STATUS_TABLE;
 
@@ -28,9 +29,8 @@ exports.login = function(req, res){
 };
 
 exports.logout = function(req, res){
-  db.collection('users').update({_id: req.param('id') }, { $set: { status: USER_STATUS_TABLE.OFFLINE }}, function(err, result){
+  db.collection('users').update({_id: ObjectID(req.param('id')) }, { $set: { status: USER_STATUS_TABLE.OFFLINE }}, {safe:true}, function(err, result){
     if(err){console.log(err);}
-    console.log(result);
     res.send('bye');
   });
 };
