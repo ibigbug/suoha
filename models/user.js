@@ -1,6 +1,7 @@
 function User(name){
   this.name = name;
   this.status = USER_STATUS_TABLE.OFFLINE;
+  this.last_time = Date.now();
 }
 
 var USER_STATUS_TABLE = {

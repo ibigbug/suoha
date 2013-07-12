@@ -52,7 +52,7 @@ define(['backbone', 'jquery', '../settings', './templates', 'models/game-model',
           data: {id: NS.user._id},
           type: 'POST'
         });
-      }, 100);
+      }, 3000);
     }
   });
 

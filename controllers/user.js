@@ -40,3 +40,24 @@ exports.allUsers = function(req, res){
     res.json(users);
   });
 };
+
+exports.heartbeat = function(req, res){
+  var context = this;
+  db.collection('users').update({_id: ObjectID(req.param('id'))}, { $set: { lasttime: Date.now() }}, {safe: true}, function(err, result){
+    err ? console.log(err) : res.send(200);
+  });
+
+  typeof context.cleaner == 'function' ?
+    console.log('cleaning') :
+    (function(context){
+      context.cleaner = function(){
+        var now = Date.now();
+        console.log(now);
+        db.collection('users').findAndModify({status: USER_STATUS_TABLE.ONLINE, lasttime: { $lt: now - 8000}}, [['lasttime', 'asc']], { $set: { status: USER_STATUS_TABLE.OFFLINE }}, {}, function(err, result){
+          console.log(result);
+        });
+        setTimeout(context.cleaner, 10000);
+      }
+      context.cleaner();
+    })(context);
+};
