@@ -43,7 +43,7 @@ exports.allUsers = function(req, res){
 
 exports.heartbeat = function(req, res){
   var context = this;
-  db.collection('users').update({_id: ObjectID(req.param('id'))}, { $set: { lasttime: Date.now() }}, {safe: true}, function(err, result){
+  db.collection('users').update({_id: ObjectID(req.param('id'))}, { $set: { last_time: Date.now() }}, {safe: true}, function(err, result){
     err ? console.log(err) : res.send(200);
   });
 
@@ -53,7 +53,7 @@ exports.heartbeat = function(req, res){
       context.cleaner = function(){
         var now = Date.now();
         console.log(now);
-        db.collection('users').findAndModify({status: USER_STATUS_TABLE.ONLINE, lasttime: { $lt: now - 8000}}, [['lasttime', 'asc']], { $set: { status: USER_STATUS_TABLE.OFFLINE }}, {}, function(err, result){
+        db.collection('users').findAndModify({status: USER_STATUS_TABLE.ONLINE, last_time: { $lt: now - 8000}}, [['last_time', 'asc']], { $set: { status: USER_STATUS_TABLE.OFFLINE }}, {}, function(err, result){
           console.log(result);
         });
         setTimeout(context.cleaner, 10000);
