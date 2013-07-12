@@ -6,7 +6,6 @@ var db =require('../config').db,
 
 exports.register = function(req, res){
   db.collection('users').save(new User(req.param('name')), function(err, user){
-    console.log(user);
     res.json(user);
   });
 };
@@ -52,9 +51,8 @@ exports.heartbeat = function(req, res){
     (function(context){
       context.cleaner = function(){
         var now = Date.now();
-        console.log(now);
-        db.collection('users').findAndModify({status: USER_STATUS_TABLE.ONLINE, last_time: { $lt: now - 8000}}, [['last_time', 'asc']], { $set: { status: USER_STATUS_TABLE.OFFLINE }}, {}, function(err, result){
-          console.log(result);
+        db.collection('users').update({status: USER_STATUS_TABLE.ONLINE, last_time: { $lt: now - 9000}}, { $set: { status: USER_STATUS_TABLE.OFFLINE }}, {safe: true}, function(err){
+          err ? res.send(500) : res.send(200);
         });
         setTimeout(context.cleaner, 10000);
       }
