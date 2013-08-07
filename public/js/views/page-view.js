@@ -1,4 +1,5 @@
-define(['backbone', 'jquery', '../settings', './templates', 'models/game-model', 'models/user-model'], function (Backbone, $, settings, Templates, Game, User) {
+define(['backbone', 'socketio', 'jquery', '../settings', './templates', 'models/game-model', 'models/user-model'], function (Backbone, socketio, $, settings, Templates, Game, User) {
+  var io = socketio.connect('http://127.0.0.1:3000');
   var PageView = Backbone.View.extend({
     initialize: function(){
       window.NS = {};
@@ -28,39 +29,12 @@ define(['backbone', 'jquery', '../settings', './templates', 'models/game-model',
     },
 
     loginUser: function(){
-      var that = this;
-      $.ajax({
-        url: settings.login_url,
-        dataType: 'json',
-        type: 'POST',
-        data: {name: $('.login-username').val()}
-      }).done(function(user){
-        that.options.user_collection.add(user);
-        NS.user = user;
-        that.startHeartBeat();
-        alert('Login Success');
-      }).fail(function(resp){
-        alert('Login Error');
+      io.emit('login', {name: $('.login-username').val()}, function(user){
+        window.NS.user = user;
+        alert('Login success');
       });
-    },
-
-    startHeartBeat: function(){
-      var that = this;
-
-      if (!NS.user) return;
-      if (NS.heartRate) return;
-      NS.heartRate = setInterval(function(){
-        $.ajax({
-          url: '/account/heartbeat',
-          data: {id: NS.user._id},
-          type: 'POST'
-        }).done(function(json){
-          json.stat == 'ok' && json.data.outdate && that.options.user_collection.fetch();
-        }).fail(function(){
-          alert('offline');
-        });
-      }, 3000);
     }
+
   });
 
   return PageView;

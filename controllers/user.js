@@ -1,5 +1,5 @@
 var db =require('../config').db,
-    ObjectID = require('mongodb').ObjectID,
+    ObjectID = db.ObjectID,
     User = require('../models/user').User,
     USER_STATUS_TABLE = require('../models/user').USER_STATUS_TABLE;
 

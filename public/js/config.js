@@ -48,9 +48,17 @@ require(['jquery', 'app', 'socketio'], function ($, game, io) {
 
     // start socket io
     var socket = io.connect('http://127.0.0.1:3000');
-    socket.on('news', function(data){
-      console.log(data);
-      socket.emit('test', { my: 'data'});
+    socket.on('refresh', function(){
+      user_collection.fetch();
+    });
+
+    $(window).on('beforeunload', function(e){
+      if(window.NS.user){
+        socket.emit('logout', {id:window.NS.user.id})
+        var ret = 'R u sure?!';
+        (e || window.event).returnValue = ret; 
+        return ret;
+      }
     });
 
   });
