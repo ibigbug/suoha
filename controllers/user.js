@@ -5,7 +5,7 @@ var db =require('../config').db,
 
 
 exports.register = function(req, res){
-  db.collection('users').save(new User(req.param('name')), function(err, user){
+  db.collection('users').save(new User(ObjectID(), req.param('name')), function(err, user){
     res.json(user);
   });
 };
@@ -43,7 +43,11 @@ exports.allUsers = function(req, res){
 exports.heartbeat = function(req, res){
   var context = this;
   db.collection('users').update({_id: ObjectID(req.param('id'))}, { $set: { last_time: Date.now() }}, {safe: true}, function(err, result){
-    err ? console.log(err) : res.send(200);
+    console.log(result);
+    err ? res.send(500) : 
+      result ? 
+        res.json({stat:'ok',data:{outdate:true}}) :
+        res.json({stat:'ok',data:{outdate:false}});
   });
 
   typeof context.cleaner == 'function' ?
@@ -52,7 +56,7 @@ exports.heartbeat = function(req, res){
       context.cleaner = function(){
         var now = Date.now();
         db.collection('users').update({status: USER_STATUS_TABLE.ONLINE, last_time: { $lt: now - 9000}}, { $set: { status: USER_STATUS_TABLE.OFFLINE }}, {safe: true}, function(err){
-          err ? res.send(500) : res.send(200);
+          err ? console.log(err) : res.send(200);
         });
         setTimeout(context.cleaner, 10000);
       }

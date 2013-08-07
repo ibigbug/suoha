@@ -15,7 +15,7 @@ define(['backbone', 'jquery', '../settings', './templates', 'models/game-model',
       var that = this;
       var game = new Game();
       game.save({}, {success: function(model, game){
-        that.options.game_collection.create(game);
+        that.options.game_collection.add(game);
       }});
     },
 
@@ -23,7 +23,7 @@ define(['backbone', 'jquery', '../settings', './templates', 'models/game-model',
       var that = this;
       var user = new User();
       user.save({ name: user.$el.find('input[name="username"]').val() }, {success: function(model, user){
-        that.options.user_collection.add(user);
+        alert('Register successfully');
       }});
     },
 
@@ -35,6 +35,7 @@ define(['backbone', 'jquery', '../settings', './templates', 'models/game-model',
         type: 'POST',
         data: {name: $('.login-username').val()}
       }).done(function(user){
+        that.options.user_collection.add(user);
         NS.user = user;
         that.startHeartBeat();
         alert('Login Success');
@@ -44,6 +45,8 @@ define(['backbone', 'jquery', '../settings', './templates', 'models/game-model',
     },
 
     startHeartBeat: function(){
+      var that = this;
+
       if (!NS.user) return;
       if (NS.heartRate) return;
       NS.heartRate = setInterval(function(){
@@ -51,6 +54,10 @@ define(['backbone', 'jquery', '../settings', './templates', 'models/game-model',
           url: '/account/heartbeat',
           data: {id: NS.user._id},
           type: 'POST'
+        }).done(function(json){
+          json.stat == 'ok' && json.data.outdate && that.options.user_collection.fetch();
+        }).fail(function(){
+          alert('offline');
         });
       }, 3000);
     }

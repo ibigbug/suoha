@@ -1,9 +1,12 @@
 #! /usr/bin/env node
 
 var express = require('express'),
-    route = require('./routes').route;
+    app = express(),
+    server = require('http').createServer(app),
+    io = require('socket.io').listen(server),
+    route = require('./routes').route,
+    socket = require('./socket');
 
-var app =  express();
 
 //Environments
 app.set('port', process.env['port'] || 3000);
@@ -20,6 +23,7 @@ app.use('/static', express.static(__dirname + '/public'));
 
 //routes
 route(app);
+socket(io);
 
 //Start
-app.listen(app.get('port'));
+server.listen(app.get('port'));

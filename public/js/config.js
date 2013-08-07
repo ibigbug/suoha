@@ -1,5 +1,6 @@
 require.config({
   paths: {
+    socketio: '/socket.io/socket.io',
     jquery: 'lib/jquery',
     underscore: 'lib/underscore',
     backbone: 'lib/backbone'
@@ -18,12 +19,16 @@ require.config({
 
     'jquery': {
       exports: '$'
+    },
+
+    'socketio': {
+      exports: 'io'
     }
 
   }
 });
 
-require(['jquery', 'app'], function ($, game) {
+require(['jquery', 'app', 'socketio'], function ($, game, io) {
 
   $(function(){
     // Init game
@@ -40,6 +45,13 @@ require(['jquery', 'app'], function ($, game) {
     //Fetch data
     game_collection.fetch();
     user_collection.fetch();
+
+    // start socket io
+    var socket = io.connect('http://127.0.0.1:3000');
+    socket.on('news', function(data){
+      console.log(data);
+      socket.emit('test', { my: 'data'});
+    });
 
   });
 });

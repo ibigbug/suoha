@@ -14,6 +14,10 @@ define(['backbone', 'underscore', 'views/templates'], function (Backbone, _, tem
       this.bind('add', function(model){
         this.render();
       });
+
+      this.bind('change', function(){
+        console.log(this);
+      });
     },
 
     render: function(){
