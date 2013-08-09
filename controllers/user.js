@@ -5,7 +5,7 @@ var db =require('../config').db,
 
 
 exports.register = function(req, res){
-  db.collection('users').save(new User(ObjectID(), req.param('name')), function(err, user){
+  db.collection('users').save(new User(ObjectID().valueOf(), req.param('name')), function(err, user){
     res.json(user);
   });
 };
@@ -25,13 +25,6 @@ exports.login = function(req, res){
         }
       })
     ) : res.send(400);
-};
-
-exports.logout = function(req, res){
-  db.collection('users').update({_id: ObjectID(req.param('id')) }, { $set: { status: USER_STATUS_TABLE.OFFLINE }}, {safe:true}, function(err, result){
-    if(err){console.log(err);}
-    res.send('bye');
-  });
 };
 
 exports.allUsers = function(req, res){

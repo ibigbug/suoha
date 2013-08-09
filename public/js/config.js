@@ -54,7 +54,7 @@ require(['jquery', 'app', 'socketio'], function ($, game, io) {
 
     $(window).on('beforeunload', function(e){
       if(window.NS.user){
-        socket.emit('logout', {id:window.NS.user.id})
+        socket.emit('logout', {id:window.NS.user.id});
         var ret = 'R u sure?!';
         (e || window.event).returnValue = ret; 
         return ret;

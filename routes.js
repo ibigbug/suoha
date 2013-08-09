@@ -9,6 +9,5 @@ exports.route = function (app) {
   app.post('/users', controllers.user.register);
 
   app.post('/account/login', controllers.user.login);
-  app.post('/account/logout', controllers.user.logout);
   app.post('/account/heartbeat', controllers.user.heartbeat);
 };
