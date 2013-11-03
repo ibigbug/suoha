@@ -1,0 +1,23 @@
+{
+  "family": "ibigbug",
+  "name": "suoha-app",
+  "version": "1.0.0",
+  "description": "Suoha app",
+  "homepage": "https://github.com/ibigbug/suoha",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ibigbug/suoha.git"
+  },
+  "bugs": {
+    "url": ""
+  },
+  "keywords": ["widget"],
+  "licenses": "MIT",
+  "spm": {
+    "output": ["suoha-app.js"],
+    "alias": {},
+    "devAlias": {},
+    "engines": {}
+  }
+}
