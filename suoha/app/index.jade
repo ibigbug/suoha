@@ -1,0 +1,39 @@
+!!!5
+html(lang="en")
+    head
+        title Suoha
+    body(ng-app="suohaApp")
+        nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
+            .navbar-header
+                a.navbar-brand(href="/") Suoha
+
+        .game-controller(ng-controller="gameController")
+            .game-control-wrap
+                p.text-primary Select game mode
+                label.radio-inline
+                    input(ng-model="game.mode", type="radio", name="mode", value="single", checked=true.toString())
+                    | Single
+                label.radio-inline
+                    input(ng-model="game.mode", type="radio", name="mode", value="internet", disabled)
+                    | Internet
+                p.text-primary Select players
+                select.form-control(name="players", ng-model="game.players")
+                    option(value=1) 1
+                    option(value=2) 2
+                    option(value=3) 3
+                button.btn.btn-primary(ng-click="startGame()") Start
+                button.btn.btn-default(ng-click="sendCard()", ng-show="game.started") Send card
+                button.btn.btn-success(ng-click="calcResult()", ng-show="game.started") Calc result
+                button.btn.btn-danger(ng-click="resetGame()", ng-show="game.started") Reset game
+            .game-table-wrap
+                span(ng-show="game.started").
+                    {{ game.cards.length }}
+                    cards remain
+                .user-seat-warp
+                    div(ng-repeat="user in game.users").user-seat
+                        ul
+                            li(ng-repeat="card in user.cards").card
+                                {{ card.type }}-{{ card.point }}
+        script(src="/static/js/sea.js")
+        script.
+            seajs.use('/static/js/main.js');

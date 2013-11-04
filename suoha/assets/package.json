@@ -15,8 +15,12 @@
   "keywords": ["widget"],
   "licenses": "MIT",
   "spm": {
-    "output": ["suoha-app.js"],
-    "alias": {},
+    "output": ["suoha-app.js", "site.css"],
+    "alias": {
+      "bootstrap": "gallery/bootstrap/3.0.0/bootstrap.css",
+      "angular": "angular/angularjs/1.1.5/angular.js",
+      "underscore": "gallery/underscore/1.4.4/underscore.js"
+    },
     "devAlias": {},
     "engines": {}
   }
